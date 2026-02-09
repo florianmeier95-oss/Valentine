@@ -1,0 +1,172 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Valentins-Date 💘</title>
+
+<style>
+body{
+  margin:0;
+  font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial;
+  background: radial-gradient(circle at top,#ffd1dc,#fff 60%,#ffe6ee);
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  min-height:100vh;
+}
+
+.card{
+  width:min(620px,92vw);
+  background:white;
+  padding:24px;
+  border-radius:22px;
+  box-shadow:0 20px 60px rgba(0,0,0,.15);
+  text-align:center;
+  overflow:hidden;
+}
+
+img{
+  width:100%;
+  height:auto;
+  max-height:340px;
+  object-fit:contain;
+  border-radius:16px;
+  margin-bottom:14px;
+  background:#eee;
+}
+
+h1{margin:6px 0 8px}
+p{opacity:.85;margin-bottom:14px}
+
+.btns{
+  display:flex;
+  gap:10px;
+  justify-content:center;
+  flex-wrap:wrap;
+}
+
+button{
+  border:none;
+  padding:12px 18px;
+  border-radius:999px;
+  font-size:16px;
+  cursor:pointer;
+}
+
+#yes{background:#ff3b6b;color:white}
+#spicy{background:black;color:white}
+#no{background:#f2f2f2}
+
+.result{
+  margin-top:14px;
+  padding:12px;
+  border-radius:14px;
+  background:white;
+  border:1px dashed #ccc;
+  display:none;
+}
+
+/* 💌 Liebesbrief */
+.letter{
+  margin-top:18px;
+  padding:18px;
+  border-radius:16px;
+  background:linear-gradient(135deg,#fff0f5,#ffe6ee);
+  box-shadow:0 10px 30px rgba(0,0,0,.1);
+  display:none;
+  opacity:0;
+  transform:translateY(10px);
+  text-align:left;
+  transition:all 1s ease;
+}
+
+.letter.show{
+  display:block;
+  opacity:1;
+  transform:translateY(0);
+}
+</style>
+</head>
+
+<body>
+
+<div class="card">
+  <img src="bild.jpeg" alt="💘">
+
+  <h1>Willst du mein Valentins-Date sein? 💘</h1>
+  <p>Ich verspreche Charme, Humor und gefährlich guten Augenkontakt 😌</p>
+
+  <div class="btns">
+    <button id="yes">Ja ❤️</button>
+    <button id="spicy">Spicy Date 🌶️</button>
+    <button id="no">Nein 🙈</button>
+  </div>
+
+  <div class="result" id="result"></div>
+
+  <div class="letter" id="letter">
+    <b>Für dich 💌</b><br><br>
+    Manche Menschen begegnet man einfach,<br>
+    und plötzlich fühlt sich selbst ein gewöhnlicher Tag besonders an.<br><br>
+    Dein Lächeln ist mein Lieblingsmoment,<br>
+    dein Blick mein Ruhepunkt im Chaos.<br><br>
+    Und egal was wir tun — Hauptsache wir.<br><br>
+    Ich freu mich auf unser Date. Wirklich sehr. 💗<br><br>
+    <i>— Flo</i>
+  </div>
+</div>
+
+<script>
+const result = document.getElementById("result");
+const letter = document.getElementById("letter");
+const noBtn  = document.getElementById("no");
+
+function show(text){
+  result.style.display="block";
+  result.innerHTML=text;
+}
+
+function confetti(){
+  for(let i=0;i<40;i++){
+    const d=document.createElement("div");
+    d.textContent=["💗","✨","💘","💖"][Math.floor(Math.random()*4)];
+    d.style.position="fixed";
+    d.style.left=(Math.random()*100)+"vw";
+    d.style.top="-10px";
+    d.style.fontSize=(14+Math.random()*18)+"px";
+    d.style.transition="transform 1.4s linear, opacity 1.4s linear";
+    document.body.appendChild(d);
+    requestAnimationFrame(()=>{
+      d.style.transform=`translateY(110vh) rotate(${Math.random()*360}deg)`;
+      d.style.opacity=0;
+    });
+    setTimeout(()=>d.remove(),1500);
+  }
+}
+
+document.getElementById("yes").onclick = () => {
+  show("😍 Deal! Dann ist es offiziell. Ich freu mich riesig auf dich 💗");
+  confetti();
+  setTimeout(() => {
+    letter.classList.add("show");
+  }, 2000); // 💌 erscheint nach 2 Sekunden
+};
+
+document.getElementById("spicy").onclick = () => {
+  show("😏 Spicy-Date gewählt… ich bring Charme, du bringst das Lächeln 🌶️");
+  confetti();
+};
+
+let dodges = 0;
+noBtn.onclick = (e) => {
+  e.preventDefault();
+  if (dodges >= 5) return document.getElementById("yes").click();
+  dodges++;
+  noBtn.style.transform = `translate(${Math.random()*200-100}px, ${Math.random()*120-60}px)`;
+  noBtn.textContent = ["Nein 🙈","Wirklich? 😭","Überleg nochmal 😌","Du willst doch 😏","Letzte Chance 😳","Ok ja 🙄❤️"][dodges];
+};
+</script>
+
+</body>
+</html>
